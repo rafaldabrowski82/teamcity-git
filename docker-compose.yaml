@@ -1,0 +1,26 @@
+services:
+  nginx:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    ports:
+      - "8000:80"
+    volumes:
+      - html:/usr/share/nginx/html
+    restart:
+      always
+  portainer:
+    image: portainer/portainer-ce:alpine
+    container_name: portainer
+    command: -H unix:///var/run/docker.sock
+    ports:
+      - "9000:9000"
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock"
+      - "portainer_data:/data"
+    restart: always
+
+volumes:
+  html: {}
+  portainer_data: {}
+
